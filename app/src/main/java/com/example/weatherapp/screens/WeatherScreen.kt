@@ -23,6 +23,27 @@ import com.example.weatherapp.viewmodel.WeatherViewModel
 import androidx.compose.material.icons.filled.Person
 
 @Composable
+fun TeamMemberItem(name: String) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Default.Person,
+            contentDescription = null,
+            tint = Color(0xFF2563EB),
+            modifier = Modifier.size(20.dp)
+        )
+        Spacer(modifier = Modifier.width(6.dp))
+        Text(
+            text = name,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Color(0xFF1E293B)
+        )
+    }
+}
+
+
+@Composable
 fun WeatherScreen(viewModel: WeatherViewModel = viewModel()) {
     val weather by viewModel.weather.observeAsState()
 
@@ -178,13 +199,14 @@ fun WeatherScreen(viewModel: WeatherViewModel = viewModel()) {
                         )
                     }
                 }
-
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Card(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFEDF4FF)) // soft blue background
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFEDF4FF))
                 ) {
                     Column(
                         modifier = Modifier
@@ -198,29 +220,49 @@ fun WeatherScreen(viewModel: WeatherViewModel = viewModel()) {
                             color = Color(0xFF1E3A8A)
                         )
 
-                        val team = listOf("Mae Monterola", "Mitchua Reyes", "Kathleen Macahidhid")
+                        val team = listOf(
+                            "Mae Monterola",
+                            "Mitchua Reyes",
+                            "Kathleen Macahidhid",
+                            "Rhea Dumaging"
+                        )
 
-                        team.forEach { name ->
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Person,
-                                    contentDescription = null,
-                                    tint = Color(0xFF2563EB),
-                                    modifier = Modifier.size(20.dp)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = name,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Color(0xFF1E293B)
-                                )
+                        Column {
+                            for (i in team.indices step 2) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    TeamMemberItem(name = team[i])
+                                    if (i + 1 < team.size) {
+                                        TeamMemberItem(name = team[i + 1])
+                                    } else {
+                                        Spacer(modifier = Modifier.width(20.dp))
+                                    }
+                                }
                             }
                         }
                     }
                 }
+
+                @Composable
+                fun TeamMemberItem(name: String) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = null,
+                            tint = Color(0xFF2563EB),
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = name,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color(0xFF1E293B)
+                        )
+                    }
+                }
+
 
             } ?: LoadingState()
         }
