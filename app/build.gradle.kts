@@ -67,6 +67,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.0")
 
+    implementation ("com.airbnb.android:lottie-compose:6.1.0")
+
 
     // Coil for Compose (instead of Glide, which is better for XML)
     implementation("io.coil-kt:coil-compose:2.4.0")
